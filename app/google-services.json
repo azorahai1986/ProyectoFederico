@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "468015966596",
+    "firebase_url": "https://productosvarios-833ff.firebaseio.com",
+    "project_id": "productosvarios-833ff",
+    "storage_bucket": "productosvarios-833ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468015966596:android:be77816c85904690e515d1",
+        "android_client_info": {
+          "package_name": "com.example.proyectofederico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "468015966596-sdhhmn2sjg9qn517q9olj6ni0cr1e2is.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXp55Gtt3k556RSdpuV20xBgzP8nFOeRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "468015966596-sdhhmn2sjg9qn517q9olj6ni0cr1e2is.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
