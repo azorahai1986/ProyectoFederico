@@ -12,16 +12,8 @@ class Repo {
             val listData = mutableListOf<Productos>()
 
             for (document in result){
-                val imagen = document.getString("imagen")
-                val producto = document.getString("producto")
-                val precio = document.getString("precio")
-
-                val productos = Productos(
-                    imagen!!,
-                    producto!!,
-                    precio!!
-                )
-                listData.add(productos)
+                val prod = document.toObject(Productos::class.java)
+                listData.add(prod)
             }
 
             mutableData.value = listData

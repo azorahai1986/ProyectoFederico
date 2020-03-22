@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     private fun observeData(){
         viewModel.fetchUserData().observe(this, Observer {
             swiperefreshlayout.isRefreshing = false
-            adapter!!.setListData(it)
+            adapter!!.setListData(ArrayList(it))
             adapter!!.notifyDataSetChanged()
         })
     }

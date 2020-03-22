@@ -1,6 +1,7 @@
 package com.example.proyectofederico
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,11 @@ import android.widget.NumberPicker
 import kotlinx.android.synthetic.main.template_lista.*
 
 
-class AdaptadorRecycler(items: ArrayList<Productos>, private val context: Context, val itemClickListener: OnItemClickListener): RecyclerView.Adapter<AdaptadorRecycler.MainViewHolder>() {
+class AdaptadorRecycler( var dataList: ArrayList<Productos>, private val context: Context, val itemClickListener: OnItemClickListener): RecyclerView.Adapter<AdaptadorRecycler.MainViewHolder>() {
 
 
-    private var dataList = mutableListOf<Productos>()
 
-    fun setListData(items: MutableList<Productos>) {
+    fun setListData(items: ArrayList<Productos>) {
         dataList = items // con esto cree la lista y la seteo
 
     }
@@ -26,9 +26,7 @@ class AdaptadorRecycler(items: ArrayList<Productos>, private val context: Contex
     //para darle click a mi lista
     var viewHolder: RecyclerView.ViewHolder? = null // 27 cambio el val por var
 
-    init {
-        this.dataList = items
-    }
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -70,19 +68,21 @@ class AdaptadorRecycler(items: ArrayList<Productos>, private val context: Contex
         fun bindView(produ: Productos, clickListener: OnItemClickListener) { // crearé una clase para mis usuarios
             // inflaré la imagen de imagenUrl dentro de la vista circleImageView
             Glide.with(context).asBitmap().load(produ.imagen).circleCrop().into(itemView.imagenView)
+            Log.e("PRODUCTO",produ.toString())
             itemView.txt_producto.text = produ.producto
             itemView.txt_precio.text = produ.precio
 
             itemView.setOnClickListener { clickListener.onItemClicked(produ) }
             // implemento el numberPicker
-            val valores = arrayOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+            val valores = Array(101) { it.toString() }
+
             val tvValores = itemView.findViewById<TextView>(R.id.tvValores)
 
             number_picker?.minValue = 0
             number_picker?.maxValue = valores.size - 1
             number_picker?.displayedValues = valores
             number_picker?.setOnValueChangedListener { picker, oldVal, newVal ->
-                tvValores?.text = "Selecion Numero $newVal"
+                tvValores?.text = if(newVal == 0) "Agregue al carrito" else "Precio ${(newVal).toDouble() * produ.precio.toDouble()}"
 
             }
 
