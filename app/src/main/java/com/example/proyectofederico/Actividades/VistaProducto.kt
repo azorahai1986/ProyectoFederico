@@ -6,10 +6,8 @@ import android.os.Bundle
 import com.example.proyectofederico.R
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.example.proyectofederico.Productos
+import com.example.proyectofederico.ModelosDeDatos.Productos
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.activity_vista_producto.*
-import kotlinx.android.synthetic.main.template_lista.*
 
 
 class VistaProducto : AppCompatActivity() {

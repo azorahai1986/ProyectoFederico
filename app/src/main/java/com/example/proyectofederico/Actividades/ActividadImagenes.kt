@@ -2,12 +2,10 @@ package com.example.proyectofederico.Actividades
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
 import com.example.proyectofederico.*
 import com.example.proyectofederico.Adapters.ImagenesAdapter
+import com.example.proyectofederico.ModelosDeDatos.Productos
 import com.example.proyectofederico.R
 import kotlinx.android.synthetic.main.activity_actividad_imagenes.*
 

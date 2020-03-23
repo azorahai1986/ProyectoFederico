@@ -11,10 +11,10 @@ import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.template_lista.view.*
 import android.widget.NumberPicker
-import kotlinx.android.synthetic.main.template_lista.*
+import com.example.proyectofederico.ModelosDeDatos.Productos
 
 
-class AdaptadorRecycler( var dataList: ArrayList<Productos>, private val context: Context, val itemClickListener: OnItemClickListener): RecyclerView.Adapter<AdaptadorRecycler.MainViewHolder>() {
+class AdaptadorRecycler(var dataList: ArrayList<Productos>, private val context: Context, val itemClickListener: OnItemClickListener): RecyclerView.Adapter<AdaptadorRecycler.MainViewHolder>() {
 
 
 
@@ -74,7 +74,7 @@ class AdaptadorRecycler( var dataList: ArrayList<Productos>, private val context
 
             itemView.setOnClickListener { clickListener.onItemClicked(produ) }
             // implemento el numberPicker
-            val valores = Array(101) { it.toString() }
+            val valores = Array(101) { it.toString() } // esto es del picker
 
             val tvValores = itemView.findViewById<TextView>(R.id.tvValores)
 

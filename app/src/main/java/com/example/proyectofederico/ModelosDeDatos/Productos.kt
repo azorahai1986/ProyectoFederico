@@ -1,4 +1,4 @@
-package com.example.proyectofederico
+package com.example.proyectofederico.ModelosDeDatos
 
 import java.io.Serializable
 

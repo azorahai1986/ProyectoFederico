@@ -4,12 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.view.get
 import androidx.viewpager.widget.PagerAdapter
-import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.template_lista.view.*
+import com.example.proyectofederico.ModelosDeDatos.Productos
 
 
 class ViewPagerAdapter(private val theViews: Array<Int>, private val theContext: Context, producto: Productos?) : PagerAdapter()
@@ -46,25 +42,10 @@ class ViewPagerAdapter(private val theViews: Array<Int>, private val theContext:
 
            // text1.setText(producto?.producto)
            // Glide.with(theContext).asBitmap().load(producto?.imagen).into(image1)
-        
-
-
-
-
-
-
-
-
-
-
-
             return layout
         }
 
-        override fun destroyItem(container: ViewGroup,
-                                 position: Int,
-                                 view: Any)
-        {
+        override fun destroyItem(container: ViewGroup, position: Int, view: Any) {
             container.removeView(view as View)
         }
 

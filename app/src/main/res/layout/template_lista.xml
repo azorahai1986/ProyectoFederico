@@ -8,8 +8,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imagenView"
-        android:layout_width="200dp"
-        android:layout_height="217dp"
+        android:layout_width="114dp"
+        android:layout_height="122dp"
         app:civ_border_width="8dp" />
 <LinearLayout
     android:layout_width="match_parent"
@@ -22,9 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="5dp"
         android:text="Quilmes"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
@@ -38,22 +38,29 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvValores"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="agregar al carrito"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:layout_height="51dp"
+        android:orientation="horizontal">
 
-    <NumberPicker
-        android:id="@+id/number_picker"
-        android:layout_width="82dp"
-        android:layout_height="60dp"
-        android:descendantFocusability="blocksDescendants"
-        android:layout_marginLeft="40dp"
-        android:orientation="horizontal" />
+        <NumberPicker
+            android:id="@+id/number_picker"
+            android:layout_width="79dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="horizontal" />
+
+        <TextView
+            android:id="@+id/tvValores"
+            android:layout_width="116dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="agregar al carrito"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
