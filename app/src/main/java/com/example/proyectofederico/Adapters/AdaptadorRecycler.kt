@@ -1,4 +1,4 @@
-package com.example.proyectofederico
+package com.example.proyectofederico.Adapters
 
 import android.content.Context
 import android.util.Log
@@ -12,6 +12,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.template_lista.view.*
 import android.widget.NumberPicker
 import com.example.proyectofederico.ModelosDeDatos.Productos
+import com.example.proyectofederico.R
 
 
 class AdaptadorRecycler(var dataList: ArrayList<Productos>, private val context: Context, val itemClickListener: OnItemClickListener): RecyclerView.Adapter<AdaptadorRecycler.MainViewHolder>() {
@@ -77,13 +78,11 @@ class AdaptadorRecycler(var dataList: ArrayList<Productos>, private val context:
             val valores = Array(101) { it.toString() } // esto es del picker
 
             val tvValores = itemView.findViewById<TextView>(R.id.tvValores)
-
             number_picker?.minValue = 0
             number_picker?.maxValue = valores.size - 1
             number_picker?.displayedValues = valores
             number_picker?.setOnValueChangedListener { picker, oldVal, newVal ->
                 tvValores?.text = if(newVal == 0) "Agregue al carrito" else "Precio ${(newVal).toDouble() * produ.precio.toDouble()}"
-
             }
 
         }

@@ -1,26 +1,25 @@
-package com.example.proyectofederico.paqueteMain
+package com.example.proyectofederico.Actividades
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.size
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.proyectofederico.*
-import com.example.proyectofederico.Actividades.VistaProducto
+import com.example.proyectofederico.Adapters.AdaptadorRecycler
 import com.example.proyectofederico.Adapters.CartelAdapter
-import com.example.proyectofederico.Adapters.ImagenesAdapter
-import com.example.proyectofederico.ModelosDeDatos.Carteles
+import com.example.proyectofederico.Adapters.OnItemClickListener
+import com.example.proyectofederico.ModelosDeDatos.MainViewModel
 import com.example.proyectofederico.ModelosDeDatos.Productos
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity(), OnItemClickListener {
+class MainActivity : AppCompatActivity(),
+    OnItemClickListener {
 
     // le daré clic al recycler
     var recyclerView: RecyclerView? = null
@@ -76,7 +75,11 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         recyclerView?.layoutManager = layoutManager
         val productos = ArrayList<Productos>()
 
-        adapter = AdaptadorRecycler(productos, applicationContext, this)
+        adapter = AdaptadorRecycler(
+            productos,
+            applicationContext,
+            this
+        )
          // esto es muy parecido a un listview. asi que deberia crear un ArrayList. arriba de lista. debajo del onCreate
         recyclerView?.adapter = adapter
 

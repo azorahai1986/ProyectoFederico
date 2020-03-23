@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Actividades.ActividadImagenes"></activity>
         <activity android:name=".Actividades.VistaProducto" />
-        <activity android:name=".paqueteMain.MainActivity">
+        <activity android:name=".Actividades.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

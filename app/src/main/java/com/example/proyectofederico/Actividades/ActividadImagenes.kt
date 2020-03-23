@@ -11,9 +11,6 @@ import kotlinx.android.synthetic.main.activity_actividad_imagenes.*
 
 class ActividadImagenes : AppCompatActivity() {
 
-    val myViews : Array<Int> = arrayOf(R.layout.layout1,
-        R.layout.layout2,
-        R.layout.layout3)
 
 
 
@@ -27,10 +24,9 @@ class ActividadImagenes : AppCompatActivity() {
         Log.e("PRODUCTO",producto.toString())
 
 
-        var imagenes = arrayListOf(producto!!.imagen, producto.imagen2)
+        var imagenes = producto!!.imagenes
         Log.e("CANT",imagenes.size.toString())
         //adapter = ViewPagerAdapter(myViews, this,producto)
-        viewPager2_imagenes.adapter = ImagenesAdapter(imagenes, this)
 
 
     }
