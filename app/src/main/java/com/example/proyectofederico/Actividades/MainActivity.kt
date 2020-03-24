@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity(),
         adapter = AdaptadorRecycler(
             productos,
             applicationContext,
+            this,
             this
         )
          // esto es muy parecido a un listview. asi que deberia crear un ArrayList. arriba de lista. debajo del onCreate
@@ -110,5 +111,12 @@ class MainActivity : AppCompatActivity(),
         startActivity(intent)
     }
 
+    fun cambiarTotalPrecio(precios: ArrayList<Double>){
+        var sum = 0.0
+        for(x in precios)
+            sum += x
+        val text = "Total Precios:      $sum"
+        tvTotalPrecios.text = text
+    }
 
 }

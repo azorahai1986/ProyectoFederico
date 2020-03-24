@@ -14,19 +14,21 @@ class ActividadImagenes : AppCompatActivity() {
 
 
 
-    lateinit var adapter: ViewPagerAdapter
+    //lateinit var adapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actividad_imagenes)
 
-        val producto = intent.getSerializableExtra("producto") as? Productos
-        Log.e("PRODUCTO",producto.toString())
+
+        /* val producto = intent.getSerializableExtra("producto") as? Productos
+         Log.e("PRODUCTO",producto.toString())
 
 
-        var imagenes = producto!!.imagenes
-        Log.e("CANT",imagenes.size.toString())
-        //adapter = ViewPagerAdapter(myViews, this,producto)
+         var imagenes = producto!!.imagenes
+         Log.e("CANT",imagenes.size.toString())
+         //adapter = ViewPagerAdapter(myViews, this,producto)*/
+
 
 
     }

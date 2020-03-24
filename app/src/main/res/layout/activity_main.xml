@@ -40,10 +40,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        android:text="Total Precios"
+        android:text="Total Precios       0"
         android:textColor="#FDFCFC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/swiperefreshlayout"
         app:layout_constraintTop_toBottomOf="@+id/ViewPagerCartel" />
 
 

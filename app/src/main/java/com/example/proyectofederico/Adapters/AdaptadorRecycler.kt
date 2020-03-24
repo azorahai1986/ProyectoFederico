@@ -11,17 +11,23 @@ import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.template_lista.view.*
 import android.widget.NumberPicker
+import com.example.proyectofederico.Actividades.MainActivity
 import com.example.proyectofederico.ModelosDeDatos.Productos
 import com.example.proyectofederico.R
 
 
-class AdaptadorRecycler(var dataList: ArrayList<Productos>, private val context: Context, val itemClickListener: OnItemClickListener): RecyclerView.Adapter<AdaptadorRecycler.MainViewHolder>() {
+class AdaptadorRecycler(var dataList: ArrayList<Productos>,
+                        private val context: Context, val itemClickListener: OnItemClickListener,
+                        val mainActivity: MainActivity): RecyclerView.Adapter<AdaptadorRecycler.MainViewHolder>() {
 
-
+    var arrayPrecios = ArrayList<Double>(dataList.size)
 
     fun setListData(items: ArrayList<Productos>) {
         dataList = items // con esto cree la lista y la seteo
-
+        arrayPrecios = ArrayList()
+        for(x in 0..items.size){
+            arrayPrecios.add(0.0)
+        }
     }
 
     //para darle click a mi lista
@@ -58,7 +64,7 @@ class AdaptadorRecycler(var dataList: ArrayList<Productos>, private val context:
         val items = dataList[position]
 
 
-        holder.bindView(items, itemClickListener)
+        holder.bindView(items, itemClickListener, position)
 
 
     }
@@ -66,7 +72,7 @@ class AdaptadorRecycler(var dataList: ArrayList<Productos>, private val context:
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
-        fun bindView(produ: Productos, clickListener: OnItemClickListener) { // crearé una clase para mis usuarios
+        fun bindView(produ: Productos, clickListener: OnItemClickListener, position: Int) { // crearé una clase para mis usuarios
             // inflaré la imagen de imagenUrl dentro de la vista circleImageView
             Glide.with(context).asBitmap().load(produ.imagen).circleCrop().into(itemView.imagenView)
             Log.e("PRODUCTO",produ.toString())
@@ -82,8 +88,12 @@ class AdaptadorRecycler(var dataList: ArrayList<Productos>, private val context:
             number_picker?.maxValue = valores.size - 1
             number_picker?.displayedValues = valores
             number_picker?.setOnValueChangedListener { picker, oldVal, newVal ->
-                tvValores?.text = if(newVal == 0) "Agregue al carrito" else "Precio ${(newVal).toDouble() * produ.precio.toDouble()}"
+                val prec = (newVal).toDouble() * produ.precio.toDouble()
+                tvValores?.text = if(newVal == 0) "Agregue al carrito" else "Precio $prec"
+                arrayPrecios[position] = prec
+                mainActivity.cambiarTotalPrecio(precios = arrayPrecios)
             }
+
 
         }
 
