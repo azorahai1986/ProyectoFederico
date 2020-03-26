@@ -19,12 +19,12 @@ import com.example.proyectofederico.R
 class AdaptadorRecycler(var dataList: ArrayList<Productos>,
                         private val context: Context, val itemClickListener: OnItemClickListener,
                         val mainActivity: MainActivity): RecyclerView.Adapter<AdaptadorRecycler.MainViewHolder>() {
-
+// val mainActivity: MainActivity y  var arrayPrecios = ArrayList<Double>(dataList.size)  para el textiew de precios
     var arrayPrecios = ArrayList<Double>(dataList.size)
 
     fun setListData(items: ArrayList<Productos>) {
         dataList = items // con esto cree la lista y la seteo
-        arrayPrecios = ArrayList()
+        arrayPrecios = ArrayList() // para el textiew de precios
         for(x in 0..items.size){
             arrayPrecios.add(0.0)
         }
@@ -90,8 +90,8 @@ class AdaptadorRecycler(var dataList: ArrayList<Productos>,
             number_picker?.setOnValueChangedListener { picker, oldVal, newVal ->
                 val prec = (newVal).toDouble() * produ.precio.toDouble()
                 tvValores?.text = if(newVal == 0) "Agregue al carrito" else "Precio $prec"
-                arrayPrecios[position] = prec
-                mainActivity.cambiarTotalPrecio(precios = arrayPrecios)
+                arrayPrecios[position] = prec  // para mostrar precios totales en textview
+                mainActivity.cambiarTotalPrecio(precios = arrayPrecios)// para mostrar precios totales en textview
             }
 
 
