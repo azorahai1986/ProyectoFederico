@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.template_lista.view.*
 import android.widget.NumberPicker
+import com.example.proyectofederico.Actividades.ActividadPdf
 import com.example.proyectofederico.Actividades.MainActivity
 import com.example.proyectofederico.ModelosDeDatos.Productos
 import com.example.proyectofederico.R
@@ -21,14 +22,26 @@ class AdaptadorRecycler(var dataList: ArrayList<Productos>,
                         val mainActivity: MainActivity): RecyclerView.Adapter<AdaptadorRecycler.MainViewHolder>() {
 // val mainActivity: MainActivity y  var arrayPrecios = ArrayList<Double>(dataList.size)  para el textiew de precios
     var arrayPrecios = ArrayList<Double>(dataList.size)
+    var arrayProductos = ArrayList<String>(dataList.size)
+
 
     fun setListData(items: ArrayList<Productos>) {
         dataList = items // con esto cree la lista y la seteo
         arrayPrecios = ArrayList() // para el textiew de precios
         for(x in 0..items.size){
             arrayPrecios.add(0.0)
+           // Log.e("lalalala", "Contiene $arrayPrecios")
         }
+        arrayProductos = ArrayList()
+        for (i in items.withIndex()){
+
+            //Log.e("esta", "vacio ${arrayProductos}")
+            arrayProductos.add("")
+
+        }
+
     }
+
 
     //para darle click a mi lista
     var viewHolder: RecyclerView.ViewHolder? = null // 27 cambio el val por var
@@ -58,7 +71,7 @@ class AdaptadorRecycler(var dataList: ArrayList<Productos>,
 
 
     }
-
+                // enlazar Contenedor de la vista
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
 
         val items = dataList[position]
@@ -71,7 +84,7 @@ class AdaptadorRecycler(var dataList: ArrayList<Productos>,
 
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
+        // funcion enlazarVista
         fun bindView(produ: Productos, clickListener: OnItemClickListener, position: Int) { // crearé una clase para mis usuarios
             // inflaré la imagen de imagenUrl dentro de la vista circleImageView
             Glide.with(context).asBitmap().load(produ.imagen).circleCrop().into(itemView.imagenView)
@@ -84,14 +97,20 @@ class AdaptadorRecycler(var dataList: ArrayList<Productos>,
             val valores = Array(101) { it.toString() } // esto es del picker
 
             val tvValores = itemView.findViewById<TextView>(R.id.tvValores)
+            val datosPdf = itemView.findViewById<TextView>(R.id.tvNombreProducto)
             number_picker?.minValue = 0
             number_picker?.maxValue = valores.size - 1
             number_picker?.displayedValues = valores
             number_picker?.setOnValueChangedListener { picker, oldVal, newVal ->
                 val prec = (newVal).toDouble() * produ.precio.toDouble()
                 tvValores?.text = if(newVal == 0) "Agregue al carrito" else "Precio $prec"
+                datosPdf?.text = if(newVal == 0) "Agregue al carrito" else "Precio"
                 arrayPrecios[position] = prec  // para mostrar precios totales en textview
-                mainActivity.cambiarTotalPrecio(precios = arrayPrecios)// para mostrar precios totales en textview
+                mainActivity.sumarTotalPrecio(precios = arrayPrecios)// para mostrar precios totales en textview
+                mainActivity.obtenerDatos(datos = arrayProductos)
+                Log.e("Precios", "contiene $datosPdf")
+
+
             }
 
 

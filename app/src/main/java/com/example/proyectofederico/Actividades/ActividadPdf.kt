@@ -1,26 +1,32 @@
 package com.example.proyectofederico.Actividades
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.example.proyectofederico.*
-import com.example.proyectofederico.Adapters.ImagenesAdapter
-import com.example.proyectofederico.ModelosDeDatos.Productos
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.proyectofederico.Adapters.AdaptadorRecyPdf
 import com.example.proyectofederico.R
 import com.itextpdf.text.Paragraph
 import com.itextpdf.text.pdf.PdfWriter
-import kotlinx.android.synthetic.main.activity_actividad_imagenes.*
+import kotlinx.android.synthetic.main.activity_pdf.*
 import java.io.FileOutputStream
 import java.lang.Exception
 import java.util.*
+import kotlin.collections.ArrayList
 
-class ActividadImagenes : AppCompatActivity() {
+class ActividadPdf : AppCompatActivity() {
+  // variables del recycler pdf
+    var recyclerPdf:RecyclerView? = null
+    private var adapter:AdaptadorRecyPdf? = null
+    var layoutManager: RecyclerView.LayoutManager? = null
+
 
     private val STORAGE_CODE: Int = 100
 
@@ -28,7 +34,20 @@ class ActividadImagenes : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_actividad_imagenes)
+        setContentView(R.layout.activity_pdf)
+
+        // inflarè el recyclerView
+        recyclerPdf = findViewById(R.id.RecyclerPdf)
+        recyclerPdf?.setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(this)
+        recyclerPdf?.layoutManager = layoutManager
+        // adaptador del recyclerPdf
+        adapter = AdaptadorRecyPdf(applicationContext)
+        recyclerPdf?.adapter = adapter
+
+
+
+
         saveButton.setOnClickListener {
             //necesitamos manejar permisos de tiempo de ejecución para dispositivos con marshmallow  y superior
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
@@ -64,7 +83,8 @@ class ActividadImagenes : AppCompatActivity() {
             PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
             mDoc.open()
 
-            val mText = textEt.text.toString()
+            val mText = tvNombreProducto.text.toString()// ??? esto no tiene nada que ver aca
+
             mDoc.addAuthor("Hernan Torres")
             mDoc.add(Paragraph(mText))
             mDoc.close()
@@ -94,6 +114,22 @@ class ActividadImagenes : AppCompatActivity() {
                 }
             }
         }
+        // esto en el activity principal
+    }
+    fun obtenerDatosDeRecycler(productos: ArrayList<String>){
+        var prod = ""
+        for(i in productos)
+            prod += i
+        val text = prod
+        tvNombreProducto.text = text
+
+        // esto en una clase aparte jutno con lo demas que le explique..
+        // luego en el boton en la lista principal, se coloca generar boton. y listo.
+        // no es necesario un EditText
+        //osea. en vez de usar una actividad utilizo una clase. como class Pdf??
+        // si, y solo cambias y omites las cosas que usan la activity
+        // le falta aprender varias cosas
+
     }
 
 

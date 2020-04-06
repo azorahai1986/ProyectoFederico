@@ -38,7 +38,7 @@ class VistaProducto : AppCompatActivity() {
         val producto = intent.getSerializableExtra("producto") as? Productos
 
         tvAcceso?.setOnClickListener {
-            val intent = Intent(this, ActividadImagenes::class.java)
+            val intent = Intent(this, ActividadPdf::class.java)
             intent.putExtra("producto",producto)
             startActivity(intent)
         }

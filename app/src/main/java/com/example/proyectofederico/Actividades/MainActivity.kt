@@ -3,6 +3,8 @@ package com.example.proyectofederico.Actividades
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,8 +20,7 @@ import com.example.proyectofederico.ModelosDeDatos.Productos
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity(),
-    OnItemClickListener {
+class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     // le daré clic al recycler
     var recyclerView: RecyclerView? = null
@@ -27,12 +28,15 @@ class MainActivity : AppCompatActivity(),
     var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: AdaptadorRecycler? = null
     private var adapter1: CartelAdapter? = null
+    var btVistaPrevia: Button? = null
+    var datosDelRecycler:String? = null
+
 
 
 
     // inicializo el viewModel
     private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
-
+// para darle movimiento al cartel de la pantalla inicial
     private val handler = Handler()
     private val runnable = Runnable {
         if(adapter1?.images?.size != 0) {
@@ -44,6 +48,16 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // enviaré los productos seleccionados a la actividad pdf............................
+        btVistaPrevia = findViewById(R.id.btVistaPrevia)
+
+        btVistaPrevia?.setOnClickListener {
+            val intent = Intent(this, ActividadPdf::class.java)
+            intent.putExtra("posicion", arrayOf(datosDelRecycler).size)
+            startActivity(intent)
+            // dar el intent de los productos seleccionados hacia actividadPdf
+        }
         // trataré de inflar el cartelAdapter
 
          cartelPrincipal = findViewById(R.id.ViewPagerCartel)
@@ -75,13 +89,9 @@ class MainActivity : AppCompatActivity(),
         recyclerView?.layoutManager = layoutManager
         val productos = ArrayList<Productos>()
 
-        adapter = AdaptadorRecycler(
-            productos,
-            applicationContext,
-            this,
-            this
+        adapter = AdaptadorRecycler(productos, applicationContext, this, this
         )
-         // esto es muy parecido a un listview. asi que deberia crear un ArrayList. arriba de lista. debajo del onCreate
+
         recyclerView?.adapter = adapter
 
 
@@ -110,13 +120,23 @@ class MainActivity : AppCompatActivity(),
         intent.putExtra("producto",producto)
         startActivity(intent)
     }
-
-    fun cambiarTotalPrecio(precios: ArrayList<Double>){
+    // metodo para traer los precio del recycer y suumaros en el textview. debajo del cartel principal
+    fun sumarTotalPrecio(precios: ArrayList<Double>){
         var sum = 0.0
         for(x in precios)
             sum += x
-        val text = "Total Precios:      $sum"
+        val text = "Total Precios: $sum"
         tvTotalPrecios.text = text
+    }
+    fun obtenerDatos(datos: ArrayList<String>){
+        var dat = ""
+        for (i in datos)
+            dat += i
+        val text = "los datos en Array son $dat"
+
+        datosDelRecycler = text
+       // Log.e("funcion Obtener datos ", "contiene $dat")
+
     }
 
 }
