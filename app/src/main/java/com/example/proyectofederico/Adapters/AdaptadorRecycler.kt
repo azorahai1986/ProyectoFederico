@@ -97,18 +97,18 @@ class AdaptadorRecycler(var dataList: ArrayList<Productos>,
             val valores = Array(101) { it.toString() } // esto es del picker
 
             val tvValores = itemView.findViewById<TextView>(R.id.tvValores)
-            val datosPdf = itemView.findViewById<TextView>(R.id.tvNombreProducto)
+           // val datosPdf = itemView.findViewById<TextView>(R.id.tvNombreProducto)
             number_picker?.minValue = 0
             number_picker?.maxValue = valores.size - 1
             number_picker?.displayedValues = valores
             number_picker?.setOnValueChangedListener { picker, oldVal, newVal ->
                 val prec = (newVal).toDouble() * produ.precio.toDouble()
                 tvValores?.text = if(newVal == 0) "Agregue al carrito" else "Precio $prec"
-                datosPdf?.text = if(newVal == 0) "Agregue al carrito" else "Precio"
+             //   datosPdf?.text = if(newVal == 0) "Agregue al carrito" else "Precio"
                 arrayPrecios[position] = prec  // para mostrar precios totales en textview
                 mainActivity.sumarTotalPrecio(precios = arrayPrecios)// para mostrar precios totales en textview
                 mainActivity.obtenerDatos(datos = arrayProductos)
-                Log.e("Precios", "contiene $datosPdf")
+             //   Log.e("Precios", "contiene $datosPdf")
 
 
             }

@@ -17,6 +17,7 @@ import com.example.proyectofederico.Adapters.CartelAdapter
 import com.example.proyectofederico.Adapters.OnItemClickListener
 import com.example.proyectofederico.ModelosDeDatos.MainViewModel
 import com.example.proyectofederico.ModelosDeDatos.Productos
+import com.example.proyectofederico.ModelosDeDatos.ProductosSeleccionados
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     private var adapter1: CartelAdapter? = null
     var btVistaPrevia: Button? = null
     var datosDelRecycler:String? = null
+
+    private var datosProductos: ArrayList<Productos>? = null
+    private var datosPrecios: ArrayList<Double>? = null
 
 
 
@@ -53,9 +57,23 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         btVistaPrevia = findViewById(R.id.btVistaPrevia)
 
         btVistaPrevia?.setOnClickListener {
-            val intent = Intent(this, ActividadPdf::class.java)
-            intent.putExtra("posicion", arrayOf(datosDelRecycler).size)
-            startActivity(intent)
+            datosProductos = adapter?.dataList
+            val datosProdSelec = arrayListOf<ProductosSeleccionados>()
+            if(datosProductos!=null) {
+                for (index in 0 until datosProductos!!.size) {
+                    if(datosPrecios!![index] > 0){
+                        val prodS = ProductosSeleccionados()
+                        prodS.producto = datosProductos!![index].producto
+                        prodS.precio = datosProductos!![index].precio.toDouble()
+                        prodS.cantidad = (datosPrecios!![index] / prodS.precio).toInt()
+                        prodS.precioTotal = datosPrecios!![index]
+                        datosProdSelec.add(prodS)
+                    }
+                }
+                val intent = Intent(this, ActividadPdf::class.java)
+                intent.putExtra(ActividadPdf.PROD_SELECT, datosProdSelec)
+                startActivity(intent)
+            }
             // dar el intent de los productos seleccionados hacia actividadPdf
         }
         // trataré de inflar el cartelAdapter
@@ -127,6 +145,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             sum += x
         val text = "Total Precios: $sum"
         tvTotalPrecios.text = text
+
+        datosPrecios = precios
     }
     fun obtenerDatos(datos: ArrayList<String>){
         var dat = ""

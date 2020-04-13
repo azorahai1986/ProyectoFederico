@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectofederico.Adapters.AdaptadorRecyPdf
+import com.example.proyectofederico.ModelosDeDatos.ProductosSeleccionados
 import com.example.proyectofederico.R
 import com.itextpdf.text.Paragraph
 import com.itextpdf.text.pdf.PdfWriter
@@ -27,14 +28,20 @@ class ActividadPdf : AppCompatActivity() {
     private var adapter:AdaptadorRecyPdf? = null
     var layoutManager: RecyclerView.LayoutManager? = null
 
+    var arrayDatos: ArrayList<ProductosSeleccionados>? = null
 
     private val STORAGE_CODE: Int = 100
 
+    companion object{
+        const val PROD_SELECT = "ProductosSelect"
+    }
     //lateinit var adapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf)
+
+        arrayDatos = intent?.getSerializableExtra(PROD_SELECT) as ArrayList<ProductosSeleccionados>
 
         // inflarè el recyclerView
         recyclerPdf = findViewById(R.id.RecyclerPdf)
@@ -42,7 +49,7 @@ class ActividadPdf : AppCompatActivity() {
         layoutManager = LinearLayoutManager(this)
         recyclerPdf?.layoutManager = layoutManager
         // adaptador del recyclerPdf
-        adapter = AdaptadorRecyPdf(applicationContext)
+        adapter = AdaptadorRecyPdf(arrayDatos!!)
         recyclerPdf?.adapter = adapter
 
 
@@ -83,10 +90,14 @@ class ActividadPdf : AppCompatActivity() {
             PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
             mDoc.open()
 
-            val mText = tvNombreProducto.text.toString()// ??? esto no tiene nada que ver aca
+           // val mText = tvNombreProducto.text.toString()// ??? esto no tiene nada que ver aca
 
             mDoc.addAuthor("Hernan Torres")
-            mDoc.add(Paragraph(mText))
+           // mDoc.add(Paragraph(mText))
+            for (dat in  arrayDatos!!){
+                val text = "${dat.producto} \t ${dat.cantidad} \t ${dat.precio} \t ${dat.precioTotal}"
+                mDoc.add(Paragraph(text))
+            }
             mDoc.close()
             Toast.makeText(this, " $mFileName.pdf\nse gusrdó en \n$mFilePath", Toast.LENGTH_SHORT).show()
         }
@@ -121,7 +132,7 @@ class ActividadPdf : AppCompatActivity() {
         for(i in productos)
             prod += i
         val text = prod
-        tvNombreProducto.text = text
+      //  tvNombreProducto.text = text
 
         // esto en una clase aparte jutno con lo demas que le explique..
         // luego en el boton en la lista principal, se coloca generar boton. y listo.
