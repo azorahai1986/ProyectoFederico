@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -57,22 +58,28 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         btVistaPrevia = findViewById(R.id.btVistaPrevia)
 
         btVistaPrevia?.setOnClickListener {
-            datosProductos = adapter?.dataList
-            val datosProdSelec = arrayListOf<ProductosSeleccionados>()
-            if(datosProductos!=null) {
-                for (index in 0 until datosProductos!!.size) {
-                    if(datosPrecios!![index] > 0){
-                        val prodS = ProductosSeleccionados()
-                        prodS.producto = datosProductos!![index].producto
-                        prodS.precio = datosProductos!![index].precio.toDouble()
-                        prodS.cantidad = (datosPrecios!![index] / prodS.precio).toInt()
-                        prodS.precioTotal = datosPrecios!![index]
-                        datosProdSelec.add(prodS)
+            if (datosPrecios.isNullOrEmpty()) {
+                Toast.makeText(this, "Agrega productos a la lista", Toast.LENGTH_SHORT).show()
+
+            }else{
+                datosProductos = adapter?.dataList
+                val datosProdSelec = arrayListOf<ProductosSeleccionados>()
+                if(datosProductos!=null) {
+                    for (index in 0 until datosProductos!!.size) {
+                        if(datosPrecios!![index] > 0){
+                            val prodS = ProductosSeleccionados()
+                            prodS.producto = datosProductos!![index].producto
+                            prodS.precio = datosProductos!![index].precio.toDouble()
+                            prodS.cantidad = (datosPrecios!![index] / prodS.precio).toInt()
+                            prodS.precioTotal = datosPrecios!![index]
+                            datosProdSelec.add(prodS)
+                        }
                     }
+                    val intent = Intent(this, ActividadPdf::class.java)
+                    intent.putExtra(ActividadPdf.PROD_SELECT, datosProdSelec)
+                    intent.putExtra("Total Precios", tvTotalPrecios.text.toString())
+                    startActivity(intent)
                 }
-                val intent = Intent(this, ActividadPdf::class.java)
-                intent.putExtra(ActividadPdf.PROD_SELECT, datosProdSelec)
-                startActivity(intent)
             }
             // dar el intent de los productos seleccionados hacia actividadPdf
         }

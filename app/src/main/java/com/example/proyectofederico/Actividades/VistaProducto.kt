@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.proyectofederico.Adapters.ActProductosAdapter
 import com.example.proyectofederico.ModelosDeDatos.MainViewModel
 import com.example.proyectofederico.ModelosDeDatos.Productos
+import kotlinx.android.synthetic.main.activity_vista_producto.*
 
 
 class VistaProducto : AppCompatActivity() {
@@ -26,22 +27,16 @@ class VistaProducto : AppCompatActivity() {
     }
     private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
-     var tvAcceso: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vista_producto)
 
-        tvAcceso = findViewById(R.id.tvAcceso)
 
 
       //  val productos = mutableListOf<Productos>()
         val producto = intent.getSerializableExtra("producto") as? Productos
 
-        tvAcceso?.setOnClickListener {
-            val intent = Intent(this, ActividadPdf::class.java)
-            intent.putExtra("producto",producto)
-            startActivity(intent)
-        }
+
 
         // inflaré las imagenes al viewPager
         viewPagerProducto = findViewById(R.id.imagenVistaProducto)

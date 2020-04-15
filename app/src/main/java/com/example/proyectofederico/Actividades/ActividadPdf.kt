@@ -27,7 +27,6 @@ class ActividadPdf : AppCompatActivity() {
     var recyclerPdf:RecyclerView? = null
     private var adapter:AdaptadorRecyPdf? = null
     var layoutManager: RecyclerView.LayoutManager? = null
-
     var arrayDatos: ArrayList<ProductosSeleccionados>? = null
 
     private val STORAGE_CODE: Int = 100
@@ -35,14 +34,15 @@ class ActividadPdf : AppCompatActivity() {
     companion object{
         const val PROD_SELECT = "ProductosSelect"
     }
-    //lateinit var adapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf)
 
         arrayDatos = intent?.getSerializableExtra(PROD_SELECT) as ArrayList<ProductosSeleccionados>
-
+        val extraerPrecios: Intent = intent
+        var preciosTotales = extraerPrecios.getStringExtra("Total Precios")
+        tvTotalPresupuesto.text = preciosTotales
         // inflarè el recyclerView
         recyclerPdf = findViewById(R.id.RecyclerPdf)
         recyclerPdf?.setHasFixedSize(true)
@@ -55,7 +55,7 @@ class ActividadPdf : AppCompatActivity() {
 
 
 
-        saveButton.setOnClickListener {
+        saveButton?.setOnClickListener {
             //necesitamos manejar permisos de tiempo de ejecución para dispositivos con marshmallow  y superior
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                 //sistema operativo> = marshMallow (6.0), verifique que el permiso esté habilitado o no
@@ -127,11 +127,7 @@ class ActividadPdf : AppCompatActivity() {
         }
         // esto en el activity principal
     }
-    fun obtenerDatosDeRecycler(productos: ArrayList<String>){
-        var prod = ""
-        for(i in productos)
-            prod += i
-        val text = prod
+
       //  tvNombreProducto.text = text
 
         // esto en una clase aparte jutno con lo demas que le explique..
@@ -141,16 +137,9 @@ class ActividadPdf : AppCompatActivity() {
         // si, y solo cambias y omites las cosas que usan la activity
         // le falta aprender varias cosas
 
-    }
 
 
-        /* val producto = intent.getSerializableExtra("producto") as? Productos
-         Log.e("PRODUCTO",producto.toString())
 
-
-         var imagenes = producto!!.imagenes
-         Log.e("CANT",imagenes.size.toString())
-         //adapter = ViewPagerAdapter(myViews, this,producto)*/
 
 
 }
