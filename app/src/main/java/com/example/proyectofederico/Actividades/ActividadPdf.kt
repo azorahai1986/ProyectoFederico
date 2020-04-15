@@ -90,16 +90,31 @@ class ActividadPdf : AppCompatActivity() {
             PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
             mDoc.open()
 
-           // val mText = tvNombreProducto.text.toString()// ??? esto no tiene nada que ver aca
+            val mPrecioTotal = tvTotalPresupuesto.text.toString()
+            val mPro = tvPro.text.toString()
+            val mCan = tvCan.text.toString()
+            val mPRe = tvPre.text.toString()
+            val mTot = tvTot.text.toString()
 
             mDoc.addAuthor("Hernan Torres")
-           // mDoc.add(Paragraph(mText))
+            val arrayLista = arrayListOf("$mPro                                  $mCan                                   $mPro                        $mTot")
+            mDoc.add(Paragraph(arrayLista.toString()))
+           /* for (list in arrayLista){
+                val lista = "$mPro \t $mCan \t $mPRe \t $mTot"
+                mDoc.add(Paragraph(lista))
+            }*/
+
+
+
             for (dat in  arrayDatos!!){
-                val text = "${dat.producto} \t ${dat.cantidad} \t ${dat.precio} \t ${dat.precioTotal}"
+                val text = "${dat.producto}                                          \t ${dat.cantidad}                             \t ${dat.precio}                        \t ${dat.precioTotal}"
                 mDoc.add(Paragraph(text))
             }
+            mDoc.add(Paragraph(mPrecioTotal))
+
             mDoc.close()
             Toast.makeText(this, " $mFileName.pdf\nse gusrdó en \n$mFilePath", Toast.LENGTH_SHORT).show()
+
         }
         catch (e: Exception){}
 

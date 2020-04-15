@@ -20,15 +20,16 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="156dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/tvPro"
+            android:layout_width="137dp"
+            android:layout_height="match_parent"
             android:text="Producto"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="#0D239F"
             android:textColorHint="#0721B1" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvCan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -37,8 +38,8 @@
             android:textColor="#4605BA" />
 
         <TextView
-            android:id="@+id/textView5"
-            android:layout_width="103dp"
+            android:id="@+id/tvPre"
+            android:layout_width="76dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:text="Precio"
@@ -46,7 +47,7 @@
             android:textColor="#0F2BC6" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/tvTot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sub Total"
