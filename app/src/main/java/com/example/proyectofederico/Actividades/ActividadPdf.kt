@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectofederico.Adapters.AdaptadorRecyPdf
 import com.example.proyectofederico.ModelosDeDatos.ProductosSeleccionados
 import com.example.proyectofederico.R
-import com.itextpdf.text.Paragraph
-import com.itextpdf.text.pdf.PdfWriter
+import com.itextpdf.text.*
+import com.itextpdf.text.pdf.*
 import kotlinx.android.synthetic.main.activity_pdf.*
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -97,8 +97,23 @@ class ActividadPdf : AppCompatActivity() {
             val mTot = tvTot.text.toString()
 
             mDoc.addAuthor("Hernan Torres")
-            val arrayLista = arrayListOf("$mPro                                  $mCan                                   $mPro                        $mTot")
-            mDoc.add(Paragraph(arrayLista.toString()))
+
+            val table = PdfPTable(4)
+
+            table.headerRows = 1
+            table.addCell(PdfPCell(Phrase("Producto", Font(Font.FontFamily.HELVETICA, 16f,Font.BOLD))))
+            table.addCell(PdfPCell(Phrase("Cantidad", Font(Font.FontFamily.HELVETICA, 16f,Font.BOLD))))
+            table.addCell(PdfPCell(Phrase("Precio", Font(Font.FontFamily.HELVETICA, 16f,Font.BOLD))))
+            table.addCell(PdfPCell(Phrase("Subtotal", Font(Font.FontFamily.HELVETICA, 16f,Font.BOLD))))
+
+            for (list in arrayDatos!!){
+                table.addCell(PdfPCell(Phrase(list.producto, Font(Font.FontFamily.HELVETICA, 12f))))
+                table.addCell(PdfPCell(Phrase(list.cantidad.toString(), Font(Font.FontFamily.HELVETICA, 12f))))
+                table.addCell(PdfPCell(Phrase(list.precio.toString(), Font(Font.FontFamily.HELVETICA, 12f))))
+                table.addCell(PdfPCell(Phrase(list.precioTotal.toString(), Font(Font.FontFamily.HELVETICA, 12f))))
+            }
+         //   val arrayLista = arrayListOf("$mPro                                  $mCan                                   $mPro                        $mTot")
+         //   mDoc.add(Paragraph(arrayLista.toString()))
            /* for (list in arrayLista){
                 val lista = "$mPro \t $mCan \t $mPRe \t $mTot"
                 mDoc.add(Paragraph(lista))
@@ -106,14 +121,18 @@ class ActividadPdf : AppCompatActivity() {
 
 
 
-            for (dat in  arrayDatos!!){
-                val text = "${dat.producto}                                          \t ${dat.cantidad}                             \t ${dat.precio}                        \t ${dat.precioTotal}"
-                mDoc.add(Paragraph(text))
-            }
-            mDoc.add(Paragraph(mPrecioTotal))
+          //  for (dat in  arrayDatos!!){
+            //    val text = "${dat.producto}                                          \t ${dat.cantidad}                             \t ${dat.precio}                        \t ${dat.precioTotal}"
+              //  mDoc.add(Paragraph(text))
+            //}
+
+            mDoc.add(table)
+            val preT =Paragraph(mPrecioTotal, Font(Font.FontFamily.HELVETICA, 15f, Font.BOLD))
+            preT.alignment = Element.ALIGN_RIGHT
+            mDoc.add(preT)
 
             mDoc.close()
-            Toast.makeText(this, " $mFileName.pdf\nse gusrdó en \n$mFilePath", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, " $mFileName.pdf\nse guardó en \n$mFilePath", Toast.LENGTH_SHORT).show()
 
         }
         catch (e: Exception){}
